@@ -1,0 +1,46 @@
+services:
+  chatwoot:
+    image: chatwoot/chatwoot:latest
+    container_name: chatwoot
+    ports:
+      - "3001:3000"
+    environment:
+      RAILS_ENV: production
+      SECRET_KEY_BASE: 567fb1a8-db55-423f-9805-6cdbcbeb1606
+      POSTGRES_HOST: chatwoot-postgres
+      REDIS_URL: redis://chatwoot-redis:6379
+      FRONTEND_URL: http://localhost:3001
+    depends_on:
+      - chatwoot-postgres
+      - chatwoot-redis
+
+  chatwoot-postgres:
+    image: postgres:12
+    container_name: chatwoot-postgres
+    environment:
+      POSTGRES_DB: codeful
+      POSTGRES_USER: codeful
+      POSTGRES_PASSWORD: "@FaMad2103#"
+    volumes:
+      - chatwoot_postgres_data:/var/lib/postgresql/data
+
+  chatwoot-redis:
+    image: redis:alpine
+    container_name: chatwoot-redis
+    volumes:
+      - chatwoot_redis_data:/data
+
+  evolution:
+    build:
+      context: ./evolution-api
+    container_name: evolution-api
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=${EVOLUTION_PORT}
+      - API_KEY=${EVOLUTION_API_KEY}
+      - LICENSE_KEY=${EVOLUTION_LICENSE_KEY}
+
+volumes:
+  chatwoot_postgres_data:
+  chatwoot_redis_data:
