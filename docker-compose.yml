@@ -18,9 +18,9 @@ services:
     image: postgres:12
     container_name: chatwoot-postgres
     environment:
-      POSTGRES_DB: codeful
-      POSTGRES_USER: codeful
-      POSTGRES_PASSWORD: "@FaMad2103#"
+      POSTGRES_DB: chatwoot
+      POSTGRES_USER: chatwoot
+      POSTGRES_PASSWORD: password
     volumes:
       - chatwoot_postgres_data:/var/lib/postgresql/data
 
