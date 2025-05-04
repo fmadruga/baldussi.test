@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   chatwoot:
     image: chatwoot/chatwoot:latest
@@ -6,7 +8,7 @@ services:
       - "3001:3000"
     environment:
       RAILS_ENV: production
-      SECRET_KEY_BASE: 567fb1a8-db55-423f-9805-6cdbcbeb1606
+      SECRET_KEY_BASE: changeme
       POSTGRES_HOST: chatwoot-postgres
       REDIS_URL: redis://chatwoot-redis:6379
       FRONTEND_URL: http://localhost:3001
@@ -24,6 +26,12 @@ services:
     volumes:
       - chatwoot_postgres_data:/var/lib/postgresql/data
 
+  chatwoot-redis:
+    image: redis:alpine
+    container_name: chatwoot-redis
+    volumes:
+      - chatwoot_redis_data:/data
+
   evolution:
     build:
       context: ./evolution-api
@@ -37,3 +45,4 @@ services:
 
 volumes:
   chatwoot_postgres_data:
+  chatwoot_redis_data:
