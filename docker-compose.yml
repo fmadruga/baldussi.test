@@ -24,12 +24,6 @@ services:
     volumes:
       - chatwoot_postgres_data:/var/lib/postgresql/data
 
-  chatwoot-redis:
-    image: redis:alpine
-    container_name: chatwoot-redis
-    volumes:
-      - chatwoot_redis_data:/data
-
   evolution:
     build:
       context: ./evolution-api
@@ -43,4 +37,3 @@ services:
 
 volumes:
   chatwoot_postgres_data:
-  chatwoot_redis_data:
